@@ -1,0 +1,11 @@
+from abc import ABC, abstractmethod
+from typing import Dict, List
+
+class ISensorSource(ABC):
+    @abstractmethod
+    def get_sensor_data(self, aircraft_id: str) -> Dict[str, float]:
+        pass
+
+    @abstractmethod
+    def get_fleet_sensor_data(self) -> Dict[str, Dict[str, float]]:
+        pass
