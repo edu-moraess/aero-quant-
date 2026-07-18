@@ -1,0 +1,24 @@
+# AeroQuant Lab
+
+**AI-Based Aircraft Health Monitoring, Digital Twin & Computer Vision Platform**
+*(Projeto de portfólio/pesquisa — v1.0)*
+
+---
+
+## Visão Geral
+
+O **AeroQuant Lab** é uma plataforma integrada para **monitoramento de saúde de aeronaves** usando **Inteligência Artificial**, **Digital Twin** e **Visão Computacional**. O projeto é modular, extensível e projetado para ser executado localmente, sem dependências externas além das bibliotecas Python listadas em `pyproject.toml`.
+
+### Funcionalidades Principais
+
+| Módulo | Descrição |
+|---|---|
+| **Sensor Data Generator** | Gera dados sintéticos realistas de sensores de aeronaves (8 sensores por aeronave, com degradação, ruído, anomalias e defeitos). |
+| **Digital Twin Engine** | Simula o estado de saúde de componentes de aeronaves em tempo real, com detecção de anomalias, diagnóstico de defeitos e estimativa de vida útil residual (RUL). |
+| **Machine Learning** | Modelos de detecção de anomalias (Isolation Forest, Autoencoder) e predição de RUL (XGBoost, LSTM). |
+| **Computer Vision** | Classificadores de imagens (ResNet50, EfficientNet, ConvNeXt, ViT) e detecção de defeitos visuais (YOLOv8). |
+| **Monte Carlo Simulation** | Simula cenários de degradação de frota com incerteza, para análise de risco e planejamento de manutenção. |
+| **Dashboard Streamlit** | Interface interativa com 13 páginas para visualização de dados, saúde da frota, detecção de anomalias, predição de RUL, simulação Monte Carlo, e mais. |
+| **Explainable AI (XAI)** | Explicabilidade de modelos de ML/CV usando SHAP, importância de features e KPIs. |
+
+---
