@@ -1,0 +1,12 @@
+from dataclasses import dataclass
+from typing import Optional
+
+from .health_state import HealthState
+
+@dataclass
+class Component:
+    id: str
+    name: str
+    aircraft_id: str
+    current_health: HealthState = HealthState()
+    expected_lifespan: Optional[int] = None
