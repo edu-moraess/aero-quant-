@@ -1,0 +1,62 @@
+# Configuração dos sensores para geração de dados sintéticos
+aircraft_ids:
+  - "AIRCRAFT_001"
+  - "AIRCRAFT_002"
+  - "AIRCRAFT_003"
+
+sensors:
+  - name: "engine_temp"
+    base_value: 75.0
+    degradation_rate: 0.1
+    noise_std: 2.0
+    anomaly_probability: 0.01
+    anomaly_severity: 20.0
+
+  - name: "engine_pressure"
+    base_value: 50.0
+    degradation_rate: 0.05
+    noise_std: 1.5
+    anomaly_probability: 0.01
+    anomaly_severity: 15.0
+
+  - name: "fuel_flow"
+    base_value: 80.0
+    degradation_rate: 0.2
+    noise_std: 3.0
+    anomaly_probability: 0.02
+    anomaly_severity: 25.0
+
+  - name: "oil_level"
+    base_value: 60.0
+    degradation_rate: 0.05
+    noise_std: 1.0
+    anomaly_probability: 0.005
+    anomaly_severity: 10.0
+
+  - name: "vibration"
+    base_value: 30.0
+    degradation_rate: 0.15
+    noise_std: 2.5
+    anomaly_probability: 0.015
+    anomaly_severity: 18.0
+
+  - name: "altitude"
+    base_value: 35000.0
+    degradation_rate: 0.0
+    noise_std: 50.0
+    anomaly_probability: 0.001
+    anomaly_severity: 500.0
+
+  - name: "speed"
+    base_value: 500.0
+    degradation_rate: 0.0
+    noise_std: 10.0
+    anomaly_probability: 0.001
+    anomaly_severity: 50.0
+
+  - name: "cabin_pressure"
+    base_value: 1.0
+    degradation_rate: 0.001
+    noise_std: 0.02
+    anomaly_probability: 0.002
+    anomaly_severity: 0.2
