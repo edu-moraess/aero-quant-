@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+*.duckdb
+data/synthetic/*.csv
+data/synthetic/*.parquet
+logs/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
