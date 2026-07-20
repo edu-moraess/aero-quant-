@@ -1,18 +1,47 @@
+"""Entidade de domínio: Aircraft — agregado raiz do Digital Twin."""
+
+from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import List
 
-from .component import Component
-from .health_state import HealthState
+from aeroquant.domain.entities.component import Component
+from aeroquant.domain.entities.health_state import HealthState
 
-@dataclass
+
+@dataclass(slots=True)
 class Aircraft:
-    id: str
+    """Representa uma aeronave monitorada pela plataforma.
+
+    Attributes:
+        aircraft_id: Identificador único da aeronave (ex.: "AC001").
+        model: Modelo/tipo da aeronave (fictício, para fins de simulação).
+        components: Componentes monitorados desta aeronave.
+        health_state: Estado de saúde vivo (Digital Twin) da aeronave.
+    """
+
+    aircraft_id: str
     model: str
-    components: List[Component] = field(default_factory=list)
-    current_health_state: HealthState = field(default_factory=HealthState)
+    components: list[Component] = field(default_factory=list)
+    health_state: HealthState = None  # type: ignore[assignment]
 
-    def add_component(self, component: Component) -> None:
-        self.components.append(component)
+    def __post_init__(self) -> None:
+        if self.health_state is None:
+            self.health_state = HealthState(aircraft_id=self.aircraft_id)
 
-    def update_health_state(self, health_state: HealthState) -> None:
-        self.current_health_state = health_state
+    def get_component(self, component_id: str) -> Component | None:
+        """Retorna um componente pelo id, ou None se não encontrado."""
+        return next((c for c in self.components if c.component_id == component_id), None)
+
+    def update_component(self, updated: Component) -> None:
+        """Substitui um componente existente por sua versão atualizada (imutável)."""
+        for idx, c in enumerate(self.components):
+            if c.component_id == updated.component_id:
+                self.components[idx] = updated
+                return
+        raise ValueError(f"Componente {updated.component_id} não encontrado em {self.aircraft_id}")
+
+    def average_degradation(self) -> float:
+        """Degradação média entre todos os componentes (0.0 se não houver componentes)."""
+        if not self.components:
+            return 0.0
+        return sum(c.degradation_index for c in self.components) / len(self.components)
