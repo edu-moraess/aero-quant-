@@ -1,12 +1,54 @@
+"""Entidade de domínio: Component.
+
+Representa um componente monitorável de uma aeronave (motor, sistema hidráulico,
+fuselagem, etc.). Não possui dependências de infraestrutura.
+"""
+
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Optional
+from enum import Enum
 
-from .health_state import HealthState
 
-@dataclass
+class ComponentType(str, Enum):
+    """Tipos de componente suportados pela plataforma."""
+
+    ENGINE = "engine"
+    HYDRAULIC = "hydraulic"
+    AIRFRAME = "airframe"
+    LANDING_GEAR = "landing_gear"
+    AVIONICS = "avionics"
+
+
+@dataclass(frozen=True, slots=True)
 class Component:
-    id: str
-    name: str
+    """Componente físico monitorado de uma aeronave.
+
+    Attributes:
+        component_id: Identificador único do componente.
+        aircraft_id: Identificador da aeronave à qual pertence.
+        component_type: Categoria do componente.
+        degradation_index: Índice de degradação normalizado em [0.0, 1.0],
+            onde 0.0 representa condição nova e 1.0 falha iminente.
+    """
+
+    component_id: str
     aircraft_id: str
-    current_health: HealthState = HealthState()
-    expected_lifespan: Optional[int] = None
+    component_type: ComponentType
+    degradation_index: float = 0.0
+
+    def __post_init__(self) -> None:
+        if not (0.0 <= self.degradation_index <= 1.0):
+            raise ValueError(
+                f"degradation_index deve estar em [0.0, 1.0], recebido: {self.degradation_index}"
+            )
+
+    def with_degradation(self, new_degradation_index: float) -> "Component":
+        """Retorna uma nova instância imutável com degradação atualizada."""
+        clipped = max(0.0, min(1.0, new_degradation_index))
+        return Component(
+            component_id=self.component_id,
+            aircraft_id=self.aircraft_id,
+            component_type=self.component_type,
+            degradation_index=clipped,
+        )
